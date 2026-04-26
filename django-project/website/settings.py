@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'models',
     'djangoql',
+    'import_export',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

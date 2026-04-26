@@ -6,6 +6,8 @@ from .models import (
     Sales, ServiceData, WorkedOn, InventoryVehicle
 )
 
+from import_export.admin import ImportExportModelAdmin
+
 def get_fields(model):
     return [
         field.name for field in model._meta.get_fields()
@@ -13,33 +15,37 @@ def get_fields(model):
     ]
 
 @admin.register(Customer)
-class CustomerAdmin(DjangoQLSearchMixin, admin.ModelAdmin):
+class CustomerAdmin(DjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin):
     list_display = get_fields(Customer)
 
 @admin.register(Employee)
-class EmployeeAdmin(DjangoQLSearchMixin, admin.ModelAdmin):
+class EmployeeAdmin(DjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin):
     list_display = get_fields(Employee)
 
 @admin.register(Vehicle)
-class VehicleAdmin(DjangoQLSearchMixin, admin.ModelAdmin):
+class VehicleAdmin(DjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin):
     list_display = get_fields(Vehicle)
 
 @admin.register(Billing)
-class BillingAdmin(DjangoQLSearchMixin, admin.ModelAdmin):
+class BillingAdmin(DjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin):
+    search_field = ('customer__name')
     list_display = get_fields(Billing)
+# Your desired filters
+    list_filter = ('paymentMethod', 'date')
 
+    
 @admin.register(Sales)
-class SalesAdmin(DjangoQLSearchMixin, admin.ModelAdmin):
+class SalesAdmin(DjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin):
     list_display = get_fields(Sales)
 
 @admin.register(ServiceData)
-class ServiceDataAdmin(DjangoQLSearchMixin, admin.ModelAdmin):
+class ServiceDataAdmin(DjangoQLSearchMixin, ImportExportModelAdmin,  admin.ModelAdmin):
     list_display = get_fields(ServiceData)
 
 @admin.register(WorkedOn)
-class WorkedOnAdmin(DjangoQLSearchMixin, admin.ModelAdmin):
+class WorkedOnAdmin(DjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin):
     list_display = get_fields(WorkedOn)
 
 @admin.register(InventoryVehicle)
-class InventoryVehicleAdmin(DjangoQLSearchMixin, admin.ModelAdmin):
+class InventoryVehicleAdmin(DjangoQLSearchMixin, ImportExportModelAdmin, admin.ModelAdmin):
     list_display = get_fields(InventoryVehicle)
